@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_xterm_uart_split_window/screen/com_port_screen.dart';
 import 'package:getwidget/components/tabs/gf_tabbar_view.dart';
 import 'package:getwidget/components/tabs/gf_tabs.dart';
 
@@ -30,16 +31,16 @@ class _TabMenuScreenState extends State<TabMenuScreen>
     return GFTabs(
       controller: tabController,
       length: 3,
-      height: 20,
+      tabBarHeight: 30,
       tabs: <Widget>[
-        Tab(icon: Icon(Icons.directions_bike)),
+        Tab(icon: Icon(Icons.link)),
         Tab(icon: Icon(Icons.directions_bus)),
         Tab(icon: Icon(Icons.directions_railway)),
       ],
       tabBarView: GFTabBarView(
         controller: tabController,
         children: <Widget>[
-          Container(color: Colors.red, child: Icon(Icons.directions_bike)),
+          ComScreen(),
           Container(color: Colors.blue, child: Icon(Icons.directions_bus)),
           Container(
             color: Colors.orange,

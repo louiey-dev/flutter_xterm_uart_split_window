@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pty/flutter_pty.dart';
+import 'package:flutter_xterm_uart_split_window/screen/com_port_screen.dart';
 import 'package:xterm/xterm.dart';
 
 late Terminal terminal;
@@ -44,6 +45,8 @@ class _XtermHomeState extends State<XtermHome> {
           terminal,
           controller: terminalController,
           backgroundOpacity: 0.7,
+          // cursorType: TerminalCursorType.verticalBar,
+          // alwaysShowCursor: true,
           // autofocus: true,
           onSecondaryTapDown: (details, offset) async {
             final selection = terminalController.selection;
@@ -171,12 +174,12 @@ class _XtermHomeState extends State<XtermHome> {
 
   // Helper method to send data to serial port
   void _sendToSerial(String data) {
-    // serialSend(data);
+    serialSend(data);
   }
 
   @override
   void dispose() {
-    // mSp?.close();
+    mSp?.close();
     super.dispose();
   }
 }

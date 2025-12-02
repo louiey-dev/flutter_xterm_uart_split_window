@@ -47,7 +47,8 @@ class _MultiSplitViewScreenState extends State<MultiSplitViewScreen> {
           ),
         ),
         Area(
-          flex: 1,
+          // flex: 1,
+          size: 140.0,
           builder: (context, area) =>
               Container(color: Colors.orange, child: TabMenuScreen()),
         ),
