@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:io';
 
 import 'package:flutter/foundation.dart';
-import 'package:flutter_xterm_uart_split_window/screen/com_port_screen.dart';
+import 'package:flutter_xterm_uart_split_window/screen/com/com_port_screen.dart';
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 

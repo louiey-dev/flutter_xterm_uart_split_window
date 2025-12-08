@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_xterm_uart_split_window/screen/com_port_screen.dart';
+import 'package:flutter_xterm_uart_split_window/screen/com/com_port_screen.dart';
 import 'package:getwidget/components/tabs/gf_tabbar_view.dart';
 import 'package:getwidget/components/tabs/gf_tabs.dart';
 

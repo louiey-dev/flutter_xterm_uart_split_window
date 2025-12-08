@@ -1,7 +1,8 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_xterm_uart_split_window/screen/ble/ble_scan.dart';
 import 'package:flutter_xterm_uart_split_window/screen/tab_menu_screen.dart';
-import 'package:flutter_xterm_uart_split_window/screen/xterm_screen.dart';
+import 'package:flutter_xterm_uart_split_window/screen/xterm/xterm_screen.dart';
 import 'package:multi_split_view/multi_split_view.dart';
 
 class MultiSplitViewScreen extends StatefulWidget {
@@ -37,7 +38,7 @@ class _MultiSplitViewScreenState extends State<MultiSplitViewScreen> {
               ),
               Area(
                 builder: (context, area) =>
-                    Container(color: Colors.yellow, child: Text("Middle")),
+                    Container(color: Colors.yellow, child: BleScanScreen()),
               ),
               Area(
                 builder: (context, area) =>

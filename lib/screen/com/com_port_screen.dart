@@ -4,13 +4,13 @@ import 'dart:typed_data';
 import 'package:flutter/material.dart';
 import 'package:flutter_libserialport/flutter_libserialport.dart';
 import 'package:flutter_xterm_uart_split_window/log_file_control.dart';
-import 'package:flutter_xterm_uart_split_window/screen/xterm_screen.dart';
+import 'package:flutter_xterm_uart_split_window/screen/xterm/xterm_screen.dart';
 import 'package:gif/gif.dart';
 
 import 'package:intl/intl.dart';
 import 'package:path_provider/path_provider.dart';
 
-import '../utils.dart';
+import '../../utils.dart';
 
 List<SerialPort> portList = [];
 SerialPort? mSp;
@@ -87,123 +87,125 @@ class _ComScreenState extends State<ComScreen> with TickerProviderStateMixin {
     // logStartStopText = _isPlaying ? 'Log Stop' : 'Log Start';
     return Container(
       color: Colors.white,
-      child: Column(
-        children: [
-          Row(
-            children: [
-              _comPort(),
-              const SizedBox(width: 20),
-              Flexible(
-                flex: 1,
-                child: DropdownButton(
-                  isExpanded: true,
-                  value: _selectedValue,
-                  items: _cmdList.map((value) {
-                    return DropdownMenuItem(
-                      value: value,
-                      child: Text(value, overflow: TextOverflow.ellipsis),
-                    );
-                  }).toList(),
-                  onChanged: (value) {
-                    setState(() {
-                      _selectedValue = value!;
-                    });
-                  },
-                ),
-              ),
-              const SizedBox(width: 20),
-              Flexible(
-                flex: 1,
-                child: ElevatedButton(
-                  onPressed: () {
-                    serialSend("$_selectedValue\n");
-                  },
-                  child: const Text("Send"),
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 5),
-          Row(
-            children: [
-              // const SizedBox(width: 20),
-              // const Text("Log file input = "),
-              const SizedBox(width: 20),
-              SizedBox(
-                width: 300,
-                child: TextField(
-                  controller: logFileNameController,
-                  decoration: const InputDecoration(
-                    border: OutlineInputBorder(),
-                    hintText: 'input log file name',
-                    labelText: 'Log file name',
-                    prefixIcon: Icon(Icons.save_rounded),
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            Row(
+              children: [
+                _comPort(),
+                const SizedBox(width: 20),
+                Flexible(
+                  flex: 1,
+                  child: DropdownButton(
+                    isExpanded: true,
+                    value: _selectedValue,
+                    items: _cmdList.map((value) {
+                      return DropdownMenuItem(
+                        value: value,
+                        child: Text(value, overflow: TextOverflow.ellipsis),
+                      );
+                    }).toList(),
+                    onChanged: (value) {
+                      setState(() {
+                        _selectedValue = value!;
+                      });
+                    },
                   ),
                 ),
-              ),
-              const SizedBox(width: 10),
-              ElevatedButton(
-                onPressed: () {
-                  if (_isPlaying) {
-                    _gifController.stop();
-                    _isPlaying = false;
-                    myUtils.log("GIF stopped, $logStartStopText");
-                    logStartStopText = "Log Start";
-                    logFileClose(); // Close the log file
-                  } else {
-                    _gifController.repeat();
-                    _isPlaying = true;
-                    myUtils.log("GIF started, $logStartStopText");
-                    logFileOpen();
-                    logStartStopText = "Log Stop";
-                  }
+                const SizedBox(width: 20),
+                Flexible(
+                  flex: 1,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      serialSend("$_selectedValue\n");
+                    },
+                    child: const Text("Send"),
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 5),
+            Row(
+              children: [
+                // const SizedBox(width: 20),
+                // const Text("Log file input = "),
+                const SizedBox(width: 20),
+                SizedBox(
+                  width: 300,
+                  child: TextField(
+                    controller: logFileNameController,
+                    decoration: const InputDecoration(
+                      border: OutlineInputBorder(),
+                      hintText: 'input log file name',
+                      labelText: 'Log file name',
+                      prefixIcon: Icon(Icons.save_rounded),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                ElevatedButton(
+                  onPressed: () {
+                    if (_isPlaying) {
+                      _gifController.stop();
+                      _isPlaying = false;
+                      myUtils.log("GIF stopped, $logStartStopText");
+                      logStartStopText = "Log Start";
+                      logFileClose(); // Close the log file
+                    } else {
+                      _gifController.repeat();
+                      _isPlaying = true;
+                      myUtils.log("GIF started, $logStartStopText");
+                      logFileOpen();
+                      logStartStopText = "Log Stop";
+                    }
 
-                  setState(() {});
-                },
-                child: Text(logStartStopText),
-              ),
-              const SizedBox(width: 10),
-              Gif(
-                width: 50.0,
-                height: 50.0,
-                image: const AssetImage('assets/images/duck.gif'),
-                // image: const AssetImage('assets/images/matrix_rain.gif'),
-                controller: _gifController,
-                autostart: Autostart.no,
-              ),
-              const SizedBox(width: 10),
-              Flexible(
-                flex: 1,
-                child: ElevatedButton(
-                  onPressed: () {
-                    serialSend("rs_init\n");
+                    setState(() {});
                   },
-                  child: Text("rs_init"),
+                  child: Text(logStartStopText),
                 ),
-              ),
-              const SizedBox(width: 10),
-              Flexible(
-                flex: 1,
-                child: ElevatedButton(
-                  onPressed: () {
-                    serialSend("rs_mot\n");
-                  },
-                  child: Text("rs_mot"),
+                const SizedBox(width: 10),
+                Gif(
+                  width: 50.0,
+                  height: 50.0,
+                  image: const AssetImage('assets/images/duck.gif'),
+                  // image: const AssetImage('assets/images/matrix_rain.gif'),
+                  controller: _gifController,
+                  autostart: Autostart.no,
                 ),
-              ),
-              const SizedBox(width: 10),
-              Flexible(
-                flex: 1,
-                child: ElevatedButton(
-                  onPressed: () {
-                    serialSend("rs_2d\n");
-                  },
-                  child: Text("rs_2d"),
+                const SizedBox(width: 10),
+                Flexible(
+                  flex: 1,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      serialSend("rs_init\n");
+                    },
+                    child: Text("rs_init"),
+                  ),
                 ),
-              ),
-            ],
-          ),
-        ],
+                const SizedBox(width: 10),
+                Flexible(
+                  flex: 1,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      serialSend("rs_mot\n");
+                    },
+                    child: Text("rs_mot"),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Flexible(
+                  flex: 1,
+                  child: ElevatedButton(
+                    onPressed: () {
+                      serialSend("rs_2d\n");
+                    },
+                    child: Text("rs_2d"),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        ),
       ),
     );
   }

@@ -207,3 +207,24 @@ class MyUtils {
     Logger.level = lvl;
   }
 }
+
+String userFunc() {
+  return getCurrentMethodName();
+}
+
+String getCurrentMethodName() {
+  final frames = StackTrace.current.toString().split('\n');
+  final frame = frames.length > 1
+      ? frames[1]
+      : null; // 0 is current, 1 is caller
+  if (frame != null) {
+    final tokens = frame.split(' ');
+    if (tokens.length > 1) {
+      final methodField = tokens[tokens.length - 2];
+      // Optionally remove class prefix: MyClass.myMethod → myMethod
+      final parts = methodField.split('.');
+      return parts.length > 1 ? parts[1] : methodField;
+    }
+  }
+  return '';
+}

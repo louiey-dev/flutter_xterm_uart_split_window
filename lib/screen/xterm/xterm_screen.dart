@@ -4,7 +4,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_pty/flutter_pty.dart';
-import 'package:flutter_xterm_uart_split_window/screen/com_port_screen.dart';
+import 'package:flutter_xterm_uart_split_window/screen/com/com_port_screen.dart';
 import 'package:xterm/xterm.dart';
 
 late Terminal terminal;
