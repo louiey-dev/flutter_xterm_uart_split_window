@@ -7,9 +7,6 @@ import 'package:flutter_xterm_uart_split_window/log_file_control.dart';
 import 'package:flutter_xterm_uart_split_window/screen/xterm/xterm_screen.dart';
 import 'package:gif/gif.dart';
 
-import 'package:intl/intl.dart';
-import 'package:path_provider/path_provider.dart';
-
 import '../../utils.dart';
 
 List<SerialPort> portList = [];
